@@ -18,17 +18,18 @@ int main() {
     }
     std::cout << std::endl;
 
-    // 음수 삭제
-    std::vector<int> positive_numbers;
-    for (const auto& num : numbers) {
-        if (num >= 0) {
-            positive_numbers.push_back(num); // 음수가 아니면 새 벡터에 추가
+    // 벡터에서 음수 삭제 (erase만 사용)
+    for (auto it = numbers.begin(); it != numbers.end(); ) {
+        if (*it < 0) {
+            it = numbers.erase(it); // 음수인 요소 삭제하고 그 위치의 다음 요소로 이동
+        } else {
+            ++it; // 음수가 아닌 경우 다음 요소로 이동
         }
     }
 
     // 음수 삭제 후 벡터 원소 출력
     std::cout << "음수를 삭제 후 벡터 원소 : ";
-    for (const auto& num : positive_numbers) {
+    for (const auto& num : numbers) {
         std::cout << num << " ";
     }
     std::cout << std::endl;
@@ -36,11 +37,11 @@ int main() {
     // 평균값 계산
     double average = 0.0;
     int sum = 0;
-    if (!positive_numbers.empty()) {
-        for (const auto& num : positive_numbers) {
+    if (!numbers.empty()) {
+        for (const auto& num : numbers) {
             sum += num; // 벡터 원소 합 계산
         }
-        average = static_cast<double>(sum) / positive_numbers.size(); // 평균 계산
+        average = static_cast<double>(sum) / numbers.size(); // 평균 계산
     }
 
     std::cout << "평균값 : " << average << std::endl;
