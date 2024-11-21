@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // max_element, min_element 사용
 
 int main() {
     std::vector<int> numbers; // 정수를 저장할 벡터
@@ -14,9 +13,18 @@ int main() {
         numbers.push_back(input); // 벡터에 값 추가
     }
 
-    // 벡터에서 최대값과 최소값 찾기
-    int max_value = *std::max_element(numbers.begin(), numbers.end());
-    int min_value = *std::min_element(numbers.begin(), numbers.end());
+    // 벡터에서 최대값과 최소값 찾기 (알고리즘 헤더 없이 직접 구현)
+    int max_value = numbers[0];
+    int min_value = numbers[0];
+
+    for (int num : numbers) {
+        if (num > max_value) {
+            max_value = num;
+        }
+        if (num < min_value) {
+            min_value = num;
+        }
+    }
 
     // 결과 출력
     std::cout << "최대값은 " << max_value << ", 최소값은 " << min_value << "입니다." << std::endl;
