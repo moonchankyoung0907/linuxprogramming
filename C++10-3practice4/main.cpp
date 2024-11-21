@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm> // remove_if 사용을 위한 헤더 추가
-#include <numeric>   // accumulate 사용
 
 int main() {
     std::vector<int> numbers; // 정수를 저장할 벡터
@@ -20,24 +18,32 @@ int main() {
     }
     std::cout << std::endl;
 
-    // 음수 삭제 (erase-remove idiom 사용)
-    numbers.erase(std::remove_if(numbers.begin(), numbers.end(), [](int x) { return x < 0; }), numbers.end());
+    // 음수 삭제
+    std::vector<int> positive_numbers;
+    for (const auto& num : numbers) {
+        if (num >= 0) {
+            positive_numbers.push_back(num); // 음수가 아니면 새 벡터에 추가
+        }
+    }
 
     // 음수 삭제 후 벡터 원소 출력
     std::cout << "음수를 삭제 후 벡터 원소 : ";
-    for (const auto& num : numbers) {
+    for (const auto& num : positive_numbers) {
         std::cout << num << " ";
     }
     std::cout << std::endl;
 
     // 평균값 계산
     double average = 0.0;
-    if (!numbers.empty()) {
-        average = static_cast<double>(std::accumulate(numbers.begin(), numbers.end(), 0)) / numbers.size();
+    int sum = 0;
+    if (!positive_numbers.empty()) {
+        for (const auto& num : positive_numbers) {
+            sum += num; // 벡터 원소 합 계산
+        }
+        average = static_cast<double>(sum) / positive_numbers.size(); // 평균 계산
     }
 
     std::cout << "평균값 : " << average << std::endl;
 
     return 0;
 }
-
